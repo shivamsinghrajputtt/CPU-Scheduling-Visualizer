@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CPU Scheduling Visualizer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">⚡ CPU Scheduling Visualizer</div>
+    <div class="subtitle">FCFS · SJF (pre/non) · Priority · Round Robin — step-by-step solution</div>
+  </header>
+
+  <main class="container">
+    <section class="leftcard card">
+      <h2>Processes (add / edit)</h2>
+
+      <div class="add-row">
+        <input id="inpPid" placeholder="Process ID (e.g. P1)" />
+        <input id="inpAT" type="number" placeholder="Arrival (AT)" min="0" />
+        <input id="inpBT" type="number" placeholder="Burst (BT)" min="1" />
+        <input id="inpPR" type="number" placeholder="Priority (optional)" min="0" />
+        <button id="btnAdd" class="btn green">Add</button>
+        <button id="btnClear" class="btn ghost">Clear All</button>
+      </div>
+
+      <div class="controls">
+        <label for="algo">Algorithm</label>
+        <select id="algo">
+          <option value="fcfs">FCFS (First Come First Serve)</option>
+          <option value="sjf-non">SJF — Non-Preemptive</option>
+          <option value="sjf-pre">SJF — Preemptive (SRTF)</option>
+          <option value="priority">Priority (Non-Preemptive)</option>
+          <option value="rr">Round Robin</option>
+        </select>
+
+        <label for="quantum" class="quantum-label">Quantum (RR)</label>
+        <input id="quantum" type="number" min="1" value="2" class="quantum-input" />
+
+        <button id="btnRun" class="btn orange full">Run Scheduling</button>
+      </div>
+
+      <div class="table-wrap">
+        <table id="procTable">
+          <thead><tr><th>PID</th><th>AT</th><th>BT</th><th>PR</th><th>Action</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="hint muted">Tip: Add processes (P1, P2 ...) — AT & BT required, Priority optional (lower = higher).</div>
+    </section>
+
+    <section class="rightcard card">
+      <div class="output-top">
+        <button id="btnCsv" class="btn purple">Download CSV</button>
+        <button id="btnResetOutput" class="btn ghost">Reset Output</button>
+      </div>
+
+      <h3>Gantt Chart</h3>
+      <div id="ganttWrap" class="gantt-wrap">
+        <div id="gantt" class="gantt"></div>
+        <div id="timeLabels" class="timeLabels"></div>
+      </div>
+
+      <h3>Step-by-step Solution</h3>
+      <div id="solution" class="solution"></div>
+
+      <h3>Result Table</h3>
+      <div class="table-wrap">
+        <table id="resultTable">
+          <thead><tr><th>PID</th><th>AT</th><th>BT</th><th>CT</th><th>TAT</th><th>WT</th><th>Resp</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div id="averages" class="averages"></div>
+    </section>
+  </main>
+
+  <footer class="footer">Made for learning — step-by-step explanations to impress your teacher ✨</footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
