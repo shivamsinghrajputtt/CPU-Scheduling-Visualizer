@@ -17,9 +17,9 @@
       <h2>Processes (add / edit)</h2>
       <div class="add-row">
         <input id="inpPid" placeholder="Process ID (e.g. P1)" aria-label="Process ID" />
-        <input id="inpAT" type="number" placeholder="Arrival (AT)" min="0" aria-label="Arrival time" />
-        <input id="inpBT" type="number" placeholder="Burst (BT)" min="1" aria-label="Burst time" />
-        <input id="inpPR" type="number" placeholder="Priority (optional)" min="0" aria-label="Priority" />
+        <input id="inpAT" type="number" step="1" placeholder="Arrival (AT)" min="0" aria-label="Arrival time" />
+        <input id="inpBT" type="number" step="1" placeholder="Burst (BT)" min="1" aria-label="Burst time" />
+        <input id="inpPR" type="number" step="1" placeholder="Priority (optional)" min="0" aria-label="Priority" />
         <button id="btnAdd" class="btn green">Add</button>
         <button id="btnClear" class="btn ghost">Clear All</button>
       </div>
@@ -35,10 +35,12 @@
         </select>
 
         <label for="quantum" class="quantum-label">Quantum (RR)</label>
-        <input id="quantum" type="number" min="1" value="2" class="quantum-input" aria-label="Round Robin quantum" />
+        <input id="quantum" type="number" min="1" step="1" value="2" class="quantum-input" aria-label="Round Robin quantum" />
 
         <button id="btnRun" class="btn orange full">Run Scheduling</button>
       </div>
+
+      <div id="algorithmInfo" class="algorithm-info" aria-live="polite"></div>
 
       <div class="table-wrap">
         <table id="procTable">
@@ -47,7 +49,7 @@
         </table>
       </div>
 
-      <div class="hint muted">Tip: Add processes (P1, P2 ...) — AT & BT required. For Priority Scheduling, lower number = higher priority; blank priority is lowest.</div>
+      <div class="hint muted">Tip: Add processes (P1, P2 ...) — AT & BT are integer time units. For Priority Scheduling, lower number = higher priority; blank priority is lowest.</div>
     </section>
 
     <section class="rightcard card">
