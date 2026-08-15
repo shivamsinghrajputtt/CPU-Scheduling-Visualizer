@@ -3,8 +3,9 @@
 > An interactive CPU scheduling simulator that turns Operating Systems scheduling algorithms into an easy-to-understand visual experience.
 
 [![Tests](https://github.com/shivamsinghrajputtt/CPU-Scheduling-Visualizer/actions/workflows/test.yml/badge.svg)](https://github.com/shivamsinghrajputtt/CPU-Scheduling-Visualizer/actions/workflows/test.yml)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-00f0ff?logo=github)](https://shivamsinghrajputtt.github.io/CPU-Scheduling-Visualizer/)
 
-**Portfolio project · HTML · CSS · JavaScript · Node.js tests · GitHub Actions · GitHub Pages**
+**[🚀 Live Demo](https://shivamsinghrajputtt.github.io/CPU-Scheduling-Visualizer/)** · **Portfolio project · HTML · CSS · JavaScript · Node.js tests · GitHub Actions · GitHub Pages**
 
 ## ✨ What it does
 
@@ -33,6 +34,7 @@ Enter processes, choose a scheduling algorithm, and generate an interactive Gant
 - Keyboard-focusable controls and reduced-motion support
 - Safe DOM rendering for user-provided process IDs
 - Automated scheduling tests and GitHub Actions CI
+- Live deployment on GitHub Pages
 
 ## 🧮 Scheduling metrics
 
@@ -125,13 +127,13 @@ Every pull request is validated by GitHub Actions before the change is considere
 
 ## 🌐 Deployment
 
-The repository includes a GitHub Pages deployment workflow. After the `main` branch is updated, GitHub Actions publishes the static site through the repository's Pages environment.
+The repository uses GitHub Pages with a GitHub Actions deployment workflow. Every update to `main` can publish the static site through the repository's Pages environment.
 
-**Live demo:** _Enable GitHub Pages for this repository, then replace this line with the generated Pages URL._
+**Live demo:** https://shivamsinghrajputtt.github.io/CPU-Scheduling-Visualizer/
 
 ## 📸 Screenshots
 
-_Add real screenshots of the process input, Gantt chart and step-by-step solution here after the UI is reviewed in a browser._
+Screenshots can be added here after capturing the final live UI for the portfolio.
 
 ## 🎯 Why I built it
 
@@ -143,7 +145,7 @@ CPU scheduling is often taught as tables and formulas. This project makes the ex
 - Visual ready-queue state during execution
 - More scheduling algorithms
 - Test coverage reporting
-- Live demo and screenshots
+- Portfolio screenshots
 
 ## 👨‍💻 Author
 
