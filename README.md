@@ -84,7 +84,8 @@ See [`docs/architecture.md`](docs/architecture.md) for the detailed data flow an
 │   └── scheduling.js      # Pure scheduling engine + metrics
 ├── tests/                 # Algorithm correctness tests
 ├── docs/
-│   └── architecture.md   # Architecture and data flow
+│   ├── architecture.md   # Architecture and data flow
+│   └── screenshots/       # Portfolio screenshots
 └── .github/
     └── workflows/
         ├── test.yml      # CI test workflow
@@ -133,7 +134,13 @@ The repository uses GitHub Pages with a GitHub Actions deployment workflow. Ever
 
 ## 📸 Screenshots
 
-Screenshots can be added here after capturing the final live UI for the portfolio.
+### FCFS — Gantt chart and scheduling metrics
+
+![FCFS scheduling visualization](docs/screenshots/cpu-scheduling-fcfs-demo.png)
+
+### Round Robin — execution timeline and step-by-step solution
+
+![Round Robin scheduling visualization](docs/screenshots/cpu-scheduling-round-robin-demo.png)
 
 ## 🎯 Why I built it
 
@@ -145,7 +152,6 @@ CPU scheduling is often taught as tables and formulas. This project makes the ex
 - Visual ready-queue state during execution
 - More scheduling algorithms
 - Test coverage reporting
-- Portfolio screenshots
 
 ## 👨‍💻 Author
 
