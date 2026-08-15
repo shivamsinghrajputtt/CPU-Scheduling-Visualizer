@@ -1,27 +1,152 @@
-# CPU Scheduling Visualizer 🎯
+# ⚡ CPU Scheduling Visualizer
 
-This project visualizes popular CPU Scheduling Algorithms used in Operating Systems.
+> An interactive CPU scheduling simulator that turns Operating Systems scheduling algorithms into an easy-to-understand visual experience.
 
-### 🚀 Algorithms Included
-- **FCFS (First Come First Serve)**
-- **SJF (Shortest Job First)**
-- **Round Robin**
-- **Priority Scheduling**
+[![Tests](https://github.com/shivamsinghrajputtt/CPU-Scheduling-Visualizer/actions/workflows/test.yml/badge.svg)](https://github.com/shivamsinghrajputtt/CPU-Scheduling-Visualizer/actions/workflows/test.yml)
 
-### 🔹 Features
-- Interactive UI for simulation
-- Real-time visualization of process execution
-- Gantt Chart style representation
-- Calculation of waiting and turnaround time
+**Portfolio project · HTML · CSS · JavaScript · Node.js tests · GitHub Actions · GitHub Pages**
 
-### 🛠️ Tech Stack
-- HTML
-- CSS
-- JavaScript
+## ✨ What it does
 
-### 📸 Screenshots (Add later)
-> I will add UI screenshots soon!
+Enter processes, choose a scheduling algorithm, and generate an interactive Gantt timeline with step-by-step decisions and scheduling metrics.
 
----
+### Supported algorithms
 
-⭐ If you like it — don’t forget to star this repo!
+| Algorithm | Type | Key rule |
+|---|---|---|
+| FCFS | Non-preemptive | Earliest arrival first |
+| SJF | Non-preemptive | Shortest burst among ready processes |
+| SRTF | Preemptive | Shortest remaining time |
+| Priority | Non-preemptive | Lowest numeric priority first |
+| Round Robin | Preemptive | FIFO ready queue + time quantum |
+
+## 🚀 Features
+
+- Interactive process input with validation
+- Arrival Time (AT), Burst Time (BT) and optional Priority
+- CPU idle-period visualization
+- Interactive Gantt chart with execution timing
+- Algorithm-specific step-by-step explanations
+- Completion, Turnaround, Waiting and Response Time
+- Average scheduling metrics
+- CSV export of results
+- Keyboard-focusable controls and reduced-motion support
+- Safe DOM rendering for user-provided process IDs
+- Automated scheduling tests and GitHub Actions CI
+
+## 🧮 Scheduling metrics
+
+- **Completion Time (CT):** time at which a process finishes.
+- **Turnaround Time (TAT):** `CT - AT`
+- **Waiting Time (WT):** `TAT - BT`
+- **Response Time (RT):** first CPU start time minus arrival time.
+
+## 🏗️ Architecture
+
+The scheduling engine is intentionally separated from browser rendering so the core algorithms can be tested without a DOM.
+
+```text
+User Input
+   ↓
+script.js (UI/controller)
+   ↓
+src/scheduling.js (pure scheduling engine)
+   ↓
+Schedule segments
+   ├── Gantt timeline
+   ├── Step-by-step explanation
+   ├── CT / TAT / WT / RT metrics
+   └── CSV export
+```
+
+See [`docs/architecture.md`](docs/architecture.md) for the detailed data flow and design decisions.
+
+## 🛠️ Tech stack
+
+- HTML5
+- CSS3
+- Modern JavaScript (ES Modules)
+- Node.js built-in test runner
+- GitHub Actions
+- GitHub Pages
+
+## 📁 Project structure
+
+```text
+.
+├── index.html
+├── style.css
+├── script.js
+├── package.json
+├── src/
+│   └── scheduling.js      # Pure scheduling engine + metrics
+├── tests/                 # Algorithm correctness tests
+├── docs/
+│   └── architecture.md   # Architecture and data flow
+└── .github/
+    └── workflows/
+        ├── test.yml      # CI test workflow
+        └── deploy.yml    # GitHub Pages deployment
+```
+
+## 💻 Run locally
+
+Because the app uses JavaScript ES modules, serve the repository through a local HTTP server instead of opening `index.html` directly with `file://`.
+
+### Python
+
+```bash
+python -m http.server 8000
+```
+
+Open `http://localhost:8000` in your browser.
+
+### Node.js
+
+```bash
+npx serve .
+```
+
+## 🧪 Tests
+
+Install Node.js 20+ and run:
+
+```bash
+npm test
+```
+
+Watch mode:
+
+```bash
+npm run test:watch
+```
+
+Every pull request is validated by GitHub Actions before the change is considered ready for merge.
+
+## 🌐 Deployment
+
+The repository includes a GitHub Pages deployment workflow. After the `main` branch is updated, GitHub Actions publishes the static site through the repository's Pages environment.
+
+**Live demo:** _Enable GitHub Pages for this repository, then replace this line with the generated Pages URL._
+
+## 📸 Screenshots
+
+_Add real screenshots of the process input, Gantt chart and step-by-step solution here after the UI is reviewed in a browser._
+
+## 🎯 Why I built it
+
+CPU scheduling is often taught as tables and formulas. This project makes the execution order visible, so learners can connect algorithm rules with the resulting Gantt chart and performance metrics.
+
+## 🔮 Roadmap
+
+- Play/pause simulation animation
+- Visual ready-queue state during execution
+- More scheduling algorithms
+- Test coverage reporting
+- Live demo and screenshots
+
+## 👨‍💻 Author
+
+**Shivam Kumar Singh**
+
+Built as a learning-focused Computer Science project combining Operating Systems concepts with practical frontend engineering.
