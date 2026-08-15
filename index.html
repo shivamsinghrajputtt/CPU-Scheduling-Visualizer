@@ -15,12 +15,11 @@
   <main class="container">
     <section class="leftcard card">
       <h2>Processes (add / edit)</h2>
-
       <div class="add-row">
-        <input id="inpPid" placeholder="Process ID (e.g. P1)" />
-        <input id="inpAT" type="number" placeholder="Arrival (AT)" min="0" />
-        <input id="inpBT" type="number" placeholder="Burst (BT)" min="1" />
-        <input id="inpPR" type="number" placeholder="Priority (optional)" min="0" />
+        <input id="inpPid" placeholder="Process ID (e.g. P1)" aria-label="Process ID" />
+        <input id="inpAT" type="number" placeholder="Arrival (AT)" min="0" aria-label="Arrival time" />
+        <input id="inpBT" type="number" placeholder="Burst (BT)" min="1" aria-label="Burst time" />
+        <input id="inpPR" type="number" placeholder="Priority (optional)" min="0" aria-label="Priority" />
         <button id="btnAdd" class="btn green">Add</button>
         <button id="btnClear" class="btn ghost">Clear All</button>
       </div>
@@ -36,7 +35,7 @@
         </select>
 
         <label for="quantum" class="quantum-label">Quantum (RR)</label>
-        <input id="quantum" type="number" min="1" value="2" class="quantum-input" />
+        <input id="quantum" type="number" min="1" value="2" class="quantum-input" aria-label="Round Robin quantum" />
 
         <button id="btnRun" class="btn orange full">Run Scheduling</button>
       </div>
@@ -48,7 +47,7 @@
         </table>
       </div>
 
-      <div class="hint muted">Tip: Add processes (P1, P2 ...) — AT & BT required, Priority optional (lower = higher).</div>
+      <div class="hint muted">Tip: Add processes (P1, P2 ...) — AT & BT required. For Priority Scheduling, lower number = higher priority; blank priority is lowest.</div>
     </section>
 
     <section class="rightcard card">
@@ -79,7 +78,6 @@
   </main>
 
   <footer class="footer">Made for learning — step-by-step explanations to impress your teacher ✨</footer>
-
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
