@@ -2,7 +2,9 @@
 
 > An interactive CPU scheduling simulator that turns Operating Systems scheduling algorithms into an easy-to-understand visual experience.
 
-**Status:** Portfolio project · **Stack:** HTML, CSS, JavaScript · **Tests:** Node.js built-in test runner
+[![Tests](https://github.com/shivamsinghrajputtt/CPU-Scheduling-Visualizer/actions/workflows/test.yml/badge.svg)](https://github.com/shivamsinghrajputtt/CPU-Scheduling-Visualizer/actions/workflows/test.yml)
+
+**Portfolio project · HTML · CSS · JavaScript · Node.js tests · GitHub Actions · GitHub Pages**
 
 ## ✨ What it does
 
@@ -39,6 +41,26 @@ Enter processes, choose a scheduling algorithm, and generate an interactive Gant
 - **Waiting Time (WT):** `TAT - BT`
 - **Response Time (RT):** first CPU start time minus arrival time.
 
+## 🏗️ Architecture
+
+The scheduling engine is intentionally separated from browser rendering so the core algorithms can be tested without a DOM.
+
+```text
+User Input
+   ↓
+script.js (UI/controller)
+   ↓
+src/scheduling.js (pure scheduling engine)
+   ↓
+Schedule segments
+   ├── Gantt timeline
+   ├── Step-by-step explanation
+   ├── CT / TAT / WT / RT metrics
+   └── CSV export
+```
+
+See [`docs/architecture.md`](docs/architecture.md) for the detailed data flow and design decisions.
+
 ## 🛠️ Tech stack
 
 - HTML5
@@ -46,6 +68,7 @@ Enter processes, choose a scheduling algorithm, and generate an interactive Gant
 - Modern JavaScript (ES Modules)
 - Node.js built-in test runner
 - GitHub Actions
+- GitHub Pages
 
 ## 📁 Project structure
 
@@ -62,16 +85,15 @@ Enter processes, choose a scheduling algorithm, and generate an interactive Gant
 │   └── architecture.md   # Architecture and data flow
 └── .github/
     └── workflows/
-        └── test.yml      # CI test workflow
+        ├── test.yml      # CI test workflow
+        └── deploy.yml    # GitHub Pages deployment
 ```
-
-See [Architecture](docs/architecture.md) for the design and data flow.
 
 ## 💻 Run locally
 
 Because the app uses JavaScript ES modules, serve the repository through a local HTTP server instead of opening `index.html` directly with `file://`.
 
-### Option 1 — Python
+### Python
 
 ```bash
 python -m http.server 8000
@@ -79,7 +101,7 @@ python -m http.server 8000
 
 Open `http://localhost:8000` in your browser.
 
-### Option 2 — Node.js
+### Node.js
 
 ```bash
 npx serve .
@@ -99,30 +121,32 @@ Watch mode:
 npm run test:watch
 ```
 
-GitHub Actions runs the test suite automatically for pull requests and development branches.
+Every pull request is validated by GitHub Actions before the change is considered ready for merge.
+
+## 🌐 Deployment
+
+The repository includes a GitHub Pages deployment workflow. After the `main` branch is updated, GitHub Actions publishes the static site through the repository's Pages environment.
+
+**Live demo:** _Enable GitHub Pages for this repository, then replace this line with the generated Pages URL._
 
 ## 📸 Screenshots
 
-_Add screenshots of the process input, Gantt chart and step-by-step solution here after the next UI review._
+_Add real screenshots of the process input, Gantt chart and step-by-step solution here after the UI is reviewed in a browser._
 
 ## 🎯 Why I built it
 
 CPU scheduling is often taught as tables and formulas. This project makes the execution order visible, so learners can connect algorithm rules with the resulting Gantt chart and performance metrics.
 
-## 🔮 Future improvements
+## 🔮 Roadmap
 
 - Play/pause simulation animation
 - Visual ready-queue state during execution
 - More scheduling algorithms
 - Test coverage reporting
-- Production deployment with a live demo
+- Live demo and screenshots
 
 ## 👨‍💻 Author
 
 **Shivam Kumar Singh**
 
 Built as a learning-focused Computer Science project combining Operating Systems concepts with practical frontend engineering.
-
----
-
-⭐ If this project helps you understand CPU scheduling, consider starring the repository.
