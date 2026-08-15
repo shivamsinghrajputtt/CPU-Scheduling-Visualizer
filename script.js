@@ -15,6 +15,7 @@ const btnRun = $('btnRun');
 const procTableBody = document.querySelector('#procTable tbody');
 const algoSel = $('algo');
 const quantumInput = $('quantum');
+const algorithmInfo = $('algorithmInfo');
 const ganttEl = $('gantt');
 const timeLabelsEl = $('timeLabels');
 const solutionEl = $('solution');
@@ -26,11 +27,28 @@ const btnResetOutput = $('btnResetOutput');
 let processes = [];
 const colorMap = Object.create(null);
 
-algoSel.addEventListener('change', () => {
-  quantumInput.style.display = algoSel.value === 'rr' ? 'inline-block' : 'none';
-});
+const algorithmDescriptions = {
+  fcfs: ['FCFS', 'Runs processes in arrival order. Non-preemptive; the CPU finishes the current process before moving to the next.'],
+  'sjf-non': ['SJF — Non-Preemptive', 'Chooses the shortest burst time among processes currently ready. Once started, a process runs to completion.'],
+  'sjf-pre': ['SRTF — Preemptive SJF', 'Always chooses the process with the shortest remaining time. A newly arrived shorter process can preempt the current one.'],
+  priority: ['Priority — Non-Preemptive', 'Chooses the highest-priority ready process. Lower numeric priority means higher priority.'],
+  rr: ['Round Robin', 'Uses a FIFO ready queue and gives each process a fixed time quantum before rotating to the next ready process.'],
+};
 
+function updateAlgorithmUI() {
+  const isRoundRobin = algoSel.value === 'rr';
+  quantumInput.style.display = isRoundRobin ? 'inline-block' : 'none';
+  const [name, description] = algorithmDescriptions[algoSel.value] ?? ['Scheduling', 'Select an algorithm to generate a schedule.'];
+  algorithmInfo.replaceChildren();
+  const heading = document.createElement('strong');
+  heading.textContent = `${name}: `;
+  algorithmInfo.appendChild(heading);
+  algorithmInfo.appendChild(document.createTextNode(description));
+}
+
+algoSel.addEventListener('change', updateAlgorithmUI);
 btnAdd.addEventListener('click', addProcess);
+
 btnClear.addEventListener('click', () => {
   if (!confirm('Clear all processes?')) return;
   processes = [];
@@ -103,10 +121,10 @@ function addProcess() {
 
 function validateProcessInput(pid, arrival, burst, priority) {
   if (!pid) return 'PID cannot be empty';
-  if (!Number.isFinite(arrival) || arrival < 0) return 'Arrival Time must be 0 or positive';
-  if (!Number.isFinite(burst) || burst <= 0) return 'Burst Time must be positive';
-  if (priority !== null && (!Number.isFinite(priority) || priority < 0)) {
-    return 'Priority must be non-negative';
+  if (!Number.isInteger(arrival) || arrival < 0) return 'Arrival Time must be a whole number (0 or positive)';
+  if (!Number.isInteger(burst) || burst <= 0) return 'Burst Time must be a whole number greater than 0';
+  if (priority !== null && (!Number.isInteger(priority) || priority < 0)) {
+    return 'Priority must be a whole number (0 or positive)';
   }
   if (processes.some((process) => process.pid === pid)) return 'PID must be unique';
   return null;
@@ -150,6 +168,16 @@ function renderGantt(schedule) {
   const startTime = Math.min(...schedule.map((segment) => segment.start));
   const endTime = Math.max(...schedule.map((segment) => segment.end));
   const total = Math.max(1, endTime - startTime);
+  const ganttSegments = [];
+  let cursor = startTime;
+
+  schedule.forEach((segment) => {
+    if (segment.start > cursor) {
+      ganttSegments.push({ pid: 'IDLE', start: cursor, end: segment.start, idle: true });
+    }
+    ganttSegments.push(segment);
+    cursor = Math.max(cursor, segment.end);
+  });
 
   for (let time = startTime; time <= endTime; time += 1) {
     const label = document.createElement('div');
@@ -160,25 +188,29 @@ function renderGantt(schedule) {
     timeLabelsEl.appendChild(label);
   }
 
-  schedule.forEach((segment, index) => {
+  ganttSegments.forEach((segment, index) => {
     const bar = document.createElement('div');
     const left = ((segment.start - startTime) / total) * 100;
     const width = ((segment.end - segment.start) / total) * 100;
 
-    bar.className = 'bar';
+    bar.className = segment.idle ? 'bar idle-bar' : 'bar';
     bar.style.left = `${left}%`;
     bar.style.width = `${width}%`;
-    bar.style.background = pickColor(segment.pid);
+    if (!segment.idle) bar.style.background = pickColor(segment.pid);
     bar.style.opacity = '0';
     bar.style.transform = 'translateY(8px)';
-    bar.textContent = segment.pid;
-    bar.style.bottom = index % 2 === 0 ? '18px' : '60px';
+    bar.style.bottom = '24px';
+
+    const label = document.createElement('span');
+    label.className = 'bar-label';
+    label.textContent = segment.idle ? `IDLE (${segment.start}–${segment.end})` : segment.pid;
+    bar.appendChild(label);
     ganttEl.appendChild(bar);
 
     setTimeout(() => {
       bar.style.opacity = '1';
       bar.style.transform = 'translateY(0)';
-    }, index * 120);
+    }, index * 100);
   });
 }
 
@@ -271,4 +303,4 @@ function clearOutput() {
 }
 
 renderProcTable();
-quantumInput.style.display = 'none';
+updateAlgorithmUI();
