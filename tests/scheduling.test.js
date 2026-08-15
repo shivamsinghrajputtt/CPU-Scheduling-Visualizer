@@ -6,6 +6,7 @@ import {
   fcfs,
   priorityNonPreemptive,
   roundRobin,
+  runScheduling,
   sjfNonPreemptive,
   sjfPreemptive,
 } from '../src/scheduling.js';
@@ -88,6 +89,49 @@ test('Round Robin follows FIFO ready-queue order', () => {
   ]);
 });
 
+test('Round Robin handles an initially idle CPU and invalid quantum safely', () => {
+  const schedule = roundRobin([
+    { pid: 'P1', arrival: 3, burst: 2 },
+  ], 0);
+
+  assert.deepEqual(schedule, [
+    { pid: 'P1', start: 3, end: 4 },
+    { pid: 'P1', start: 4, end: 5 },
+  ]);
+});
+
+test('SJF non-preemptive handles an initially idle CPU', () => {
+  const schedule = sjfNonPreemptive([
+    { pid: 'P1', arrival: 4, burst: 2 },
+    { pid: 'P2', arrival: 6, burst: 1 },
+  ]);
+
+  assert.deepEqual(schedule, [
+    { pid: 'P1', start: 4, end: 6 },
+    { pid: 'P2', start: 6, end: 7 },
+  ]);
+});
+
+test('SRTF handles CPU idle time before the first process arrives', () => {
+  const schedule = sjfPreemptive([
+    { pid: 'P1', arrival: 5, burst: 2 },
+  ]);
+
+  assert.deepEqual(schedule, [
+    { pid: 'P1', start: 5, end: 7 },
+  ]);
+});
+
+test('Priority scheduling handles an idle period before the first process', () => {
+  const schedule = priorityNonPreemptive([
+    { pid: 'P1', arrival: 3, burst: 2, priority: 1 },
+  ]);
+
+  assert.deepEqual(schedule, [
+    { pid: 'P1', start: 3, end: 5 },
+  ]);
+});
+
 test('Metrics calculate CT, TAT, WT and response time correctly', () => {
   const schedule = [
     { pid: 'P1', start: 0, end: 5 },
@@ -120,4 +164,23 @@ test('Metrics support preemptive schedules and use first start for response time
   assert.equal(result.results.find((p) => p.pid === 'P1').completion, 10);
   assert.equal(result.results.find((p) => p.pid === 'P1').response, 0);
   assert.equal(result.results.find((p) => p.pid === 'P1').waiting, 2);
+});
+
+test('runScheduling dispatches supported algorithms and rejects empty input', () => {
+  assert.deepEqual(
+    runScheduling([{ pid: 'P1', arrival: 0, burst: 2 }], 'fcfs'),
+    [{ pid: 'P1', start: 0, end: 2 }],
+  );
+
+  assert.throws(
+    () => runScheduling([], 'fcfs'),
+    /At least one process is required/,
+  );
+});
+
+test('runScheduling rejects unsupported algorithms', () => {
+  assert.throws(
+    () => runScheduling([{ pid: 'P1', arrival: 0, burst: 2 }], 'unknown'),
+    /Unsupported scheduling algorithm: unknown/,
+  );
 });
