@@ -14,8 +14,12 @@ body{margin:0;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:#e8
 .leftcard{min-height:420px}.rightcard{min-height:620px}.add-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .add-row input{padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:inherit;min-width:84px}
 .add-row .btn{padding:10px 12px}.controls{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.controls select,.controls input{padding:10px;border-radius:10px;background:#111b2d;border:1px solid rgba(255,255,255,0.08);color:inherit;min-width:140px}
-.controls select option{background:#111b2d;color:#e8f0ff}.controls .full{flex:1}
+.controls select,.controls input{padding:10px;border-radius:10px;background:#111b2d;border:1px solid rgba(255,255,255,0.08);color:#e8f0ff;min-width:140px}
+/* Native select menus are rendered by the OS/browser. Explicit dark color-scheme prevents white/light option menus on dark UI. */
+.controls select{color-scheme:dark;appearance:auto;accent-color:#9b6aff}
+.controls select option{background-color:#111b2d;color:#e8f0ff}
+.controls select option:checked,.controls select option:hover{background-color:#6a4cff;color:#fff}
+.controls .full{flex:1}
 .btn{border:0;border-radius:10px;padding:9px 12px;font-weight:700;cursor:pointer;transition:transform 160ms ease,filter 160ms ease}
 .btn.green{background:linear-gradient(90deg,#2ee6a1,var(--neon-cyan));color:#042b2a}.btn.orange{background:linear-gradient(90deg,#ffb86b,#ff8a65);color:#1b0d00}
 .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--muted)}.btn.purple{background:linear-gradient(90deg,var(--neon-purple),#6a4cff);color:white}
